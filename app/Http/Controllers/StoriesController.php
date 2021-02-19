@@ -29,6 +29,7 @@ class StoriesController extends Controller
      */
     public function create()
     {
+        $this->authorize('create');
         // fix bug: Dung chung form edit
         $story = new Story;
         return view('stories.create', ['story' => $story]);
@@ -68,7 +69,8 @@ class StoriesController extends Controller
      */
     public function edit(Story $story)
     {
-        Gate::authorize('story-edit', $story);
+        // Gate::authorize('story-edit', $story); // Dinh nghia authorize trong AuthoServiceProvider
+        // $this->authorize('update', $story); // Dung policy
         return view('stories.edit', ['story' => $story]);
     }
 
@@ -81,6 +83,8 @@ class StoriesController extends Controller
      */
     public function update(StoryRequest $request, Story $story)
     {
+        $this->authorize('update', $story); // Dung policy
+
         $story->update($request->data());
 
         return redirect()->route('stories.index')->with(['status' => 'Update Story Successfully']);
@@ -94,6 +98,7 @@ class StoriesController extends Controller
      */
     public function destroy(Story $story)
     {
+        $this->authorize('update', $story); // Dung policy 
         $story->delete();
         return redirect()->route('stories.index')->with(['status' => 'Delete Story Successfully']);
     }
