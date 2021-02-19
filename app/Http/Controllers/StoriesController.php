@@ -9,6 +9,10 @@ use App\Story;
 
 class StoriesController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Story::class, 'story');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +33,7 @@ class StoriesController extends Controller
      */
     public function create()
     {
-        $this->authorize('create');
+        // $this->authorize('create');
         // fix bug: Dung chung form edit
         $story = new Story;
         return view('stories.create', ['story' => $story]);
@@ -83,7 +87,7 @@ class StoriesController extends Controller
      */
     public function update(StoryRequest $request, Story $story)
     {
-        $this->authorize('update', $story); // Dung policy
+        // $this->authorize('update', $story); // Dung policy
 
         $story->update($request->data());
 
@@ -98,7 +102,7 @@ class StoriesController extends Controller
      */
     public function destroy(Story $story)
     {
-        $this->authorize('update', $story); // Dung policy 
+        // $this->authorize('update', $story); // Dung policy 
         $story->delete();
         return redirect()->route('stories.index')->with(['status' => 'Delete Story Successfully']);
     }
