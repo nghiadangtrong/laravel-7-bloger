@@ -59,3 +59,28 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Thao Tac - Manipulation
+
+composer create-project laravel/laravel <name> 7.x
+
+php artisan list
+php artisan serve
+yarn watch
+php artisan route:list
+php artisan cache:clear
+php artisan config:cache
+
+composer require laravel/ui:^2.4
+php artisan ui vue --auth
+npm install && npm run dev
+
+php artisan make:modal Story -m
+php artisan migrate
+php artisan make:controller StoriesController -r
+php artisan make:request StoryRequest
+
+php artisan tinker
+
+### autho
+php artisan make:policy StoryPolicy -m Story 
