@@ -29,4 +29,5 @@ Route::get('/', 'DashboardController@index')->name('dashboard.index');
 
 // Liên kết biến activeStory trong route -> Khai báo App\Providers\
 // Chỉ hiển thị story active
-Route::get('/story/{activeStory}', 'DashboardController@show')->name('dashboard.show');
+// :slug => Sử dụng column slug để hiển thị thay cho column id (Mặc định)
+Route::get('/story/{activeStory:slug}', 'DashboardController@show')->name('dashboard.show');

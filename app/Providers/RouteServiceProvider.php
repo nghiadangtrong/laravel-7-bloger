@@ -35,8 +35,8 @@ class RouteServiceProvider extends ServiceProvider
         parent::boot();
 
         // bind key activeStory với tương đương với story hoạt động
-        Route::bind('activeStory', function ($id) {
-            return \App\Story::where('id', $id)->where('status', 1)->firstOrFail();
+        Route::bind('activeStory', function ($slug) {
+            return \App\Story::where('slug', $slug)->where('status', 1)->firstOrFail();
         });
     }
 

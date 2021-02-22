@@ -94,4 +94,43 @@ php artisan make:policy StoryPolicy -m Story
     php artisan tinker
     factory(App\Story::class, 3)->create() 'Tạo 3 bản ghi trong bảng User'
 
+### Route::bind
+    - Tạo liên kết giữa một biến hiển thị tại Route và trả về kết quả mong muốn
+    https://laravel.com/docs/7.x/routing#explicit-binding
 
+    '/story/{activeStory}'  => bind => \App\Story::where('id', $id)->where('status', 1)->firstOrFail()
+
+### Accessors & Mutators
+    https://laravel.com/docs/7.x/eloquent-mutators#accessors-and-mutators
+    Accessors: 
+        Sau khi query 1 câu lệnh có thể thay đổi giá trị hiển thị columns
+
+        Khai báo:
+
+        ```php
+            // File: App\Story
+            // Hàm thay đổi giá trị 'title' khi lấy ra 
+            // Viết hoa chữ cái đầu tiền
+            public function getTitleAttribute ($value) {
+                return ucfirst($value);
+            }
+        ```
+
+        Sử dụng
+
+        ```php
+            ...
+            $title = \App\Story::find(1)->title; // Chữ cái đầu tiên title tự động viết hoa
+        ```
+
+    Mutators:
+        Cho phép thực hiện tiền sử lý trước khi lưu một attribute vào column
+
+        ```php
+            // File: App\Story
+            // Khi lưu attribute title thì tạo và lưu slug theo title
+            public function setTitleAttribute ($value) {
+                $this->attributes['title'] = $value;
+                $this->attributes['slug'] = \Illuminate\Support\Str::slug($value);
+            }
+        ```
