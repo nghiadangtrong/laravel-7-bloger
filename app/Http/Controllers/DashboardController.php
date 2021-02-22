@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Story;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -14,6 +15,7 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
+        // DB::enableQueryLog();
         $query = Story::where('status', 1);
         $type = $request->input('type');
 
@@ -21,8 +23,8 @@ class DashboardController extends Controller
             $query->where('type', $type);
         }
 
-        $stories = $query->orderBy('id', 'DESC')
-            ->paginate(6);
+        $stories = $query->orderBy('id', 'DESC')->paginate(6);
+
         return view('dashboard.index', [ 'stories' => $stories ]);
     }
 

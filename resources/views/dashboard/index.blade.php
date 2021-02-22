@@ -50,3 +50,6 @@
     </div>
 </div>
 @endsection
+
+
+{{-- {{ dd(DB::getQueryLog()) }} --}}
