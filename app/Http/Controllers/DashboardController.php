@@ -26,8 +26,8 @@ class DashboardController extends Controller
         return view('dashboard.index', [ 'stories' => $stories ]);
     }
 
-    public function show(Story $story)
+    public function show(Story $activeStory)
     {
-        return view('dashboard.show', ['story' => $story]);
+        return view('dashboard.show', ['story' => $activeStory]);
     }
 }
