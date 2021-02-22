@@ -60,7 +60,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-## Thao Tac - Manipulation -- 8806
+## Thao Tac - Manipulation -- 8806 - 4.1
 
 composer create-project laravel/laravel <name> 7.x
 
@@ -81,6 +81,17 @@ php artisan make:controller StoriesController -r
 php artisan make:request StoryRequest
 
 php artisan tinker
-
-### autho
+    `App\Stories::truncate()` Xóa hết bản ghi trong table
+### authorize
 php artisan make:policy StoryPolicy -m Story 
+
+### factory
+    - Tạo dữ liệu test cho Model(Table) tương ứng
+    - Gọi Hàm factory trong unit test hoặc thông qua tinker
+
+    php artisan make:factory StoryFactory -m Story
+
+    php artisan tinker
+    factory(App\Story::class, 3)->create() 'Tạo 3 bản ghi trong bảng User'
+
+
