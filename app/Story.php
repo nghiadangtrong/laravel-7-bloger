@@ -46,7 +46,7 @@ class Story extends Model
     }
 
     /**
-     * Khi lưu giá trị title cũng lưu lại slug tương ứng
+     * Khi lưu title cũng lưu lại slug tương ứng
      */
     public function setTitleAttribute ($value) {
         $this->attributes['title'] = $value;

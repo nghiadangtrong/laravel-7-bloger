@@ -31,3 +31,5 @@ Route::get('/', 'DashboardController@index')->name('dashboard.index');
 // Chỉ hiển thị story active
 // :slug => Sử dụng column slug để hiển thị thay cho column id (Mặc định)
 Route::get('/story/{activeStory:slug}', 'DashboardController@show')->name('dashboard.show');
+
+Route::get('/mail', 'DashboardController@email')->name('dashboard.email');

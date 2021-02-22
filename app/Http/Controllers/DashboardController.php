@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Story;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\NotifyAdmin;
+use App\Mail\NotifyAdminMarkdown;
 
 class DashboardController extends Controller
 {
@@ -31,5 +35,18 @@ class DashboardController extends Controller
     public function show(Story $activeStory)
     {
         return view('dashboard.show', ['story' => $activeStory]);
+    }
+
+    public function email() {
+        // Cach 1:
+        // Mail::raw('This is content test mail', function ($message) {
+        //     $message->to('shanksn92@gmail.com')
+        //         ->subject('Send mail test');
+        // });
+
+        // Cach 2:
+        Mail::send(new NotifyAdminMarkdown('Test send mail'));
+
+        return '<div>Send Mail Success</div>';
     }
 }

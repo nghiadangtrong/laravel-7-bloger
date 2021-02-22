@@ -134,3 +134,12 @@ php artisan make:policy StoryPolicy -m Story
                 $this->attributes['slug'] = \Illuminate\Support\Str::slug($value);
             }
         ```
+
+### Mail
+    `php artisan make:mail NotifyAdmin`
+
+    Tạo dựa trên Markdown có sẵn của laravel
+    `php artisan make:mail NotifyAdminMarkdown --markdown=mails.markdown.notifyAmdin`  
+
+    Copy larvel-mail markdown ra folder /vendor/email/ và có thể tùy chỉnh
+    `php artisan vendor:publish --tag=laravel-mail`
