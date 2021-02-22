@@ -143,3 +143,5 @@ php artisan make:policy StoryPolicy -m Story
 
     Copy larvel-mail markdown ra folder /vendor/email/ và có thể tùy chỉnh
     `php artisan vendor:publish --tag=laravel-mail`
+
+    Tìm hiểu vendor:publish => https://laravel.com/docs/7.x/packages
