@@ -13,6 +13,7 @@ class StoriesController extends Controller
     {
         $this->authorizeResource(Story::class, 'story');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -88,8 +89,8 @@ class StoriesController extends Controller
     public function update(StoryRequest $request, Story $story)
     {
         // $this->authorize('update', $story); // Dung policy
-
-        $story->update($request->data());
+        // $story->update($request->data());
+        $story->update($request->all());
 
         return redirect()->route('stories.index')->with(['status' => 'Update Story Successfully']);
     }

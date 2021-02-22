@@ -19,8 +19,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('stories', 'StoriesController');
 });
+
+Route::get('/', 'DashboardController@index')->name('dashboard.index');
+
+// Liên kết biến activeStory trong route -> Khai báo App\Providers\
+// Chỉ hiển thị story active
+Route::get('/story/{activeStory}', 'DashboardController@show')->name('dashboard.show');
