@@ -89,18 +89,19 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 `php artisan make:policy StoryPolicy -m Story `
 
 c1: Theo chuẩn REST API
-**file: ** App\Http\Controllers\StoriesController.php
+**file:** App\Http\Controllers\StoriesController.php
 
-```php
+    ```php
+
     public function __construct()
     {
         // Authorize theo chuẩn REST API
         $this->authorizeResource(Story::class, 'story');
     }
-```
+    ```
 
 c2: Chặn theo route khai báo Policy
-**file: ** App\Http\Controllers\StoriesController.php
+**file:** App\Http\Controllers\StoriesController.php
 
 ```php
     public function destroy(Story $story)
