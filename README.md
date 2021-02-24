@@ -202,7 +202,7 @@ Tạo dựa trên Markdown có sẵn của laravel
 Copy larvel-mail markdown ra folder /vendor/email/ và có thể tùy chỉnh
 `php artisan vendor:publish --tag=laravel-mail`
 
-Tìm hiểu vendor:publish => https://laravel.com/docs/7.x/packages
+Tìm hiểu vendor:publish => [https://laravel.com/docs/7.x/packages](https://laravel.com/docs/7.x/packages)
 
 ### Event + Listen
 
@@ -211,10 +211,14 @@ Tìm hiểu vendor:publish => https://laravel.com/docs/7.x/packages
 **follow:** Bind event to listens = > dispatch event => listens thực hiện
 
 B1: Tạo event `php artisan make:event StoryCreated` => Chuyền Data
+
 B2: Tạo listens và viết hàm thực hiện
+
 `php artisan make:listen SendNotification -e StoryCreated`
 `php artisan make:listen SendNotification -e WriteLog`
+
 B3: Bind Event với nhiều listens : App\Providers\EventServiceProvider -> $listen[]
+
 B4: Gọi event `event (new StoryCreate(data))`
 
 #### Subscribers cho Event + Listen
