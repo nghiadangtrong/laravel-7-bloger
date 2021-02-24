@@ -16,6 +16,10 @@ class StoryEventSubscribe
         Log::info('[use subscribe listen] update story "'.$event->title.'"');
     }
 
+    public function test ($event) {
+        Log::info('test->'.$event->title);
+    }
+
     public function subscribe ($events) {
         $events->listen(
             'App\Events\StoryCreated',
@@ -25,6 +29,11 @@ class StoryEventSubscribe
         $events->listen(
             'App\Events\StoryEdited',
             'App\Listeners\StoryEventSubscribe@handleWritelogStoryEdited'
+        );
+
+        $events->listen(
+            'App\Events\StoryEdited',
+            'App\Listeners\StoryEventSubscribe@test'
         );
     }
 }

@@ -183,6 +183,21 @@ php artisan make:policy StoryPolicy -m Story
         
         `protected $subscribe = ['App\Listeners\StoryEventSubscribe']`
 
+### SoftDelete - Xóa mềm
+    B1: Tạo migrate `php artisan make:migration add_softdelete_to_stories --table=stories` 
+    B2: $table->softDeleles() & $table->dropSoftDeleles()
+    B3: Thêm phương thức SoftDeletes vào model
+    **file: App\Story**
+
+    ```php
+        use Illumanite\Database\Eloquent\Model;
+        use Illumanite\Database\Eloquent\SoftDeletes;
+
+        class Story extends Model{
+            use SoftDeletes;
+        }
+    ```
+
 ## Document
 https://laravel-news.com/laravel-boilerplate-7-0
 
