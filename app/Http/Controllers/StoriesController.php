@@ -79,7 +79,7 @@ class StoriesController extends Controller
      */
     public function edit(Story $story)
     {
-        // Gate::authorize('story-edit', $story); // Dinh nghia authorize trong AuthoServiceProvider
+        // Gate::authorize('story-edit', $story); // Dinh nghia authorize trong AuthServiceProvider
         // $this->authorize('update', $story); // Dung policy
         return view('stories.edit', ['story' => $story]);
     }

@@ -82,8 +82,58 @@ php artisan make:request StoryRequest
 
 php artisan tinker
     `App\Stories::truncate()` Xóa hết bản ghi trong table
-### authorize
-php artisan make:policy StoryPolicy -m Story 
+    `Hash::make('passowrd')` Hash password
+### authorize - Dùng Policy vs Gate
+    `php artisan make:policy StoryPolicy -m Story `
+
+    c1: Theo chuẩn REST API
+    **file: ** App\Http\Controllers\StoriesController.php
+
+    ```php
+        public function __construct()
+        {
+            // Authorize theo chuẩn REST API
+            $this->authorizeResource(Story::class, 'story');
+        }
+    ```
+
+    c2: Chặn theo route khai báo Policy
+    **file: ** App\Http\Controllers\StoriesController.php
+
+    ```php
+        public function destroy(Story $story)
+        {
+            $this->authorize('delete', $story); // Dung StoryPolicy function delete()
+            $story->delete();
+        }
+    ```
+
+    c3: Dùng Gate
+    
+    **Định nghĩa Gate ** App\Providers\AuthServiceProvider.php
+
+    ```php
+        use Illuminate\Support\Facades\Gate;
+
+        public function boot()
+        {
+            $this->registerPolicies();
+
+            Gate::define('story-edit', function ($user, $story) {
+                return $user->id === $story->user_id;
+            }); 
+        }
+    ```
+
+    **Use Gate** App\Http\Controllers\StoriesController.php
+
+    ```php
+        public function update(StoryRequest $request, Story $story)
+        {
+            Gate::authorize('story-edit', $story); // Dinh nghia authorize trong AuthServiceProvider
+            $story->update($request->all());
+        }
+    ```
 
 ### factory
     - Tạo dữ liệu test cho Model(Table) tương ứng
@@ -200,6 +250,8 @@ php artisan make:policy StoryPolicy -m Story
 
 ## Document
 https://laravel-news.com/laravel-boilerplate-7-0
+
+https://spatie.be/docs/laravel-permission/v4/introduction
 
 ## Note
     **File log** : storage/logs/larvel.log

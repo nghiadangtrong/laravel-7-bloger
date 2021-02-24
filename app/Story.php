@@ -26,7 +26,7 @@ class Story extends Model
     }
 
     /**
-     * query được thêm vào mặc định với mỗi lần query
+     * Tiền xử lý mỗi lần query
      * 
      * @Document : https://laravel.com/docs/7.x/eloquent#query-scopes
      */
@@ -44,7 +44,10 @@ class Story extends Model
         return ucfirst($value);
     }
 
-    public function getFootnoteAttribute ($value) {
+    /**
+     * thêm 'footnote' attribute
+     */
+    public function getFootnoteAttribute () {
         return $this->type.' Type, created at '.date('d-m-y', strtotime($this->created_at));
     }
 
