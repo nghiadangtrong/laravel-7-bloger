@@ -60,7 +60,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-## Thao Tac - Manipulation -- 8806 - 4.1
+# Thao Tac - Manipulation -- 8806 - 4.1
 
 composer create-project laravel/laravel :nameProject 7.x
 
@@ -84,8 +84,7 @@ php artisan tinker
     `App\Stories::truncate()` Xóa hết bản ghi trong table
     `Hash::make('passowrd')` Hash password
 
-
-### authorize - Dùng Policy vs Gate
+## authorize - Dùng Policy vs Gate
 
     `php artisan make:policy StoryPolicy -m Story `
 
@@ -138,7 +137,7 @@ php artisan tinker
         }
     ```
 
-### factory
+## factory
 
     - Tạo dữ liệu test cho Model(Table) tương ứng
     - Gọi Hàm factory trong unit test hoặc thông qua tinker
@@ -148,7 +147,7 @@ php artisan tinker
     php artisan tinker
     factory(App\Story::class, 3)->create() 'Tạo 3 bản ghi trong bảng User'
 
-### Route::bind
+## Route::bind
 
     - Tạo liên kết giữa một biến hiển thị tại Route và trả về kết quả mong muốn
     https://laravel.com/docs/7.x/routing#explicit-binding
@@ -191,7 +190,7 @@ php artisan tinker
             }
         ```
 
-### Mail
+## Mail
 
     `php artisan make:mail NotifyAdmin`
 
@@ -203,7 +202,7 @@ php artisan tinker
 
     Tìm hiểu vendor:publish => https://laravel.com/docs/7.x/packages
 
-### Event + Listen
+## Event + Listen
 
     **Dùng khi:** Muốn thực hiện một tác vụ độc lập hoặc tốn nhiều thời gian
 
@@ -216,7 +215,7 @@ php artisan tinker
     B3: Bind Event với nhiều listens : App\Providers\EventServiceProvider -> $listen[] 
     B4: Gọi event `event (new StoryCreate(data))`
 
-#### Subscribers cho Event + Listen
+### Subscribers cho Event + Listen
 
     **Tác dụng: ** Cho phép đăng ký nhiều listener trong 1 class
 
@@ -242,7 +241,7 @@ php artisan tinker
         
         `protected $subscribe = ['App\Listeners\StoryEventSubscribe']`
 
-### SoftDelete - Xóa mềm
+## SoftDelete - Xóa mềm
 
     B1: Tạo migrate `php artisan make:migration add_softdelete_to_stories --table=stories` 
     B2: $table->softDeleles() & $table->dropSoftDeleles()
@@ -258,12 +257,12 @@ php artisan tinker
         }
     ```
 
-## Document
+# Document
 
 https://laravel-news.com/laravel-boilerplate-7-0
 
 https://spatie.be/docs/laravel-permission/v4/introduction
 
-## Note
+# Note
 
     **File log** : storage/logs/larvel.log
