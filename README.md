@@ -226,7 +226,8 @@ B4: Gọi event `event (new StoryCreate(data))`
 **Tác dụng:** Cho phép đăng ký nhiều listener trong 1 class
 
 B1: Tạo file listen subscribe `php artisan make:listen StoryEventSubscribe`
-*bind event vào listen tương ứng*
+
+- *Bind event vào listen tương ứng*
 
 **file: App\Listeners\StoryEventSubscribe**:
 
@@ -251,7 +252,9 @@ B2: Đăng ký subscribe
 ### SoftDelete - Xóa mềm
 
 B1: Tạo migrate `php artisan make:migration add_softdelete_to_stories --table=stories`
+
 B2: $table->softDeleles() & $table->dropSoftDeleles()
+
 B3: Thêm phương thức SoftDeletes vào model
 **file: App\Story**
 
