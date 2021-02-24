@@ -103,7 +103,7 @@ php artisan make:policy StoryPolicy -m Story
 ### Accessors & Mutators
     https://laravel.com/docs/7.x/eloquent-mutators#accessors-and-mutators
     Accessors: 
-        Sau khi query 1 câu lệnh có thể thay đổi giá trị hiển thị columns
+        Cho phép thực hiện tiền sử lý trước khi hiển thị attribute
 
         Khai báo:
 
@@ -145,3 +145,19 @@ php artisan make:policy StoryPolicy -m Story
     `php artisan vendor:publish --tag=laravel-mail`
 
     Tìm hiểu vendor:publish => https://laravel.com/docs/7.x/packages
+
+### Event + Listen
+    **Dùng khi:** Muốn thực hiện một tác vụ độc lập hoặc tốn nhiều thời gian
+
+    **follow:** Bind event to listens = > dispatch event => listens thực hiện
+
+    B1: Tạo event `php artisan make:event StoryCreated` => Chuyền Data
+    B2: Tạo listens và viết hàm thực hiện
+    `php artisan make:listen SendNotification -e StoryCreated`
+    `php artisan make:listen SendNotification -e WriteLog`
+    B3: Bind Event với nhiều listens : App\Providers\EventServiceProvider -> $listen[] 
+    B4: Gọi event `event (new StoryCreate(data))`
+
+
+## Document
+https://laravel-news.com/laravel-boilerplate-7-0

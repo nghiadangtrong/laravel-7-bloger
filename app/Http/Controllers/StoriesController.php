@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StoryCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoryRequest;
@@ -50,7 +51,10 @@ class StoriesController extends Controller
     {
         // Tao thong qua ORM 
         // Tu dong them user_id boi id user hien tai
-        auth()->user()->stories()->create($request->all());
+        $story = auth()->user()->stories()->create($request->all());
+
+        // Dispatch event
+        event( new StoryCreated($story->title));
 
         return redirect()->route('stories.index')->with(['status' => 'Created Story Successfully']);
     }
