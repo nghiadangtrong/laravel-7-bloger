@@ -28,6 +28,6 @@ class SendNotification implements ShouldQueue
      */
     public function handle(StoryCreated $event)
     {
-        Mail::send(new NotifyAdminMarkdown('Create story '.$event->title.'.'));
+        Mail::send(new NotifyAdminMarkdown('[listener normal] Create story '.$event->title.'.'));
     }
 }

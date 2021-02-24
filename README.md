@@ -158,6 +158,33 @@ php artisan make:policy StoryPolicy -m Story
     B3: Bind Event với nhiều listens : App\Providers\EventServiceProvider -> $listen[] 
     B4: Gọi event `event (new StoryCreate(data))`
 
+#### Subscribers cho Event + Listen
+    **Tác dụng: ** Cho phép đăng ký nhiều listener trong 1 class
+
+    B1: Tạo file listen subscribe `php artisan make:listen StoryEventSubscribe` 
+        bind event vào listen tương ứng
+        
+        **file: App\Listeners\StoryEventSubscribe**
+
+        ```php 
+            // bind event to method handle
+            public function subscribe($events) {
+                $event->listen(
+                    'App\Events\StoryCreated',
+                    'App\Listeners\StoryEventSubscribe@HanldeCreated'
+                )
+            }
+
+            // Define Method Handle 
+            public function HanldeCreated($event) {}
+        ```
+    B2: Đăng ký subscribe 
+        **file: App\Providers\EventServiceProvider **
+        
+        `protected $subscribe = ['App\Listeners\StoryEventSubscribe']`
 
 ## Document
 https://laravel-news.com/laravel-boilerplate-7-0
+
+## Note
+    **File log** : storage/logs/larvel.log

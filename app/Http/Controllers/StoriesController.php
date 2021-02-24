@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\StoryCreated;
+use App\Events\StoryEdited;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoryRequest;
@@ -95,6 +96,8 @@ class StoriesController extends Controller
         // $this->authorize('update', $story); // Dung policy
         // $story->update($request->data());
         $story->update($request->all());
+
+        event( new StoryEdited($story->title));
 
         return redirect()->route('stories.index')->with(['status' => 'Update Story Successfully']);
     }
