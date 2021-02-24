@@ -86,58 +86,56 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## authorize - Dùng Policy vs Gate
 
-    test
+`php artisan make:policy StoryPolicy -m Story `
 
-    `php artisan make:policy StoryPolicy -m Story `
+c1: Theo chuẩn REST API
+**file: ** App\Http\Controllers\StoriesController.php
 
-    c1: Theo chuẩn REST API
-    **file: ** App\Http\Controllers\StoriesController.php
+```php
+    public function __construct()
+    {
+        // Authorize theo chuẩn REST API
+        $this->authorizeResource(Story::class, 'story');
+    }
+```
 
-    ```php
-        public function __construct()
-        {
-            // Authorize theo chuẩn REST API
-            $this->authorizeResource(Story::class, 'story');
-        }
-    ```
+c2: Chặn theo route khai báo Policy
+**file: ** App\Http\Controllers\StoriesController.php
 
-    c2: Chặn theo route khai báo Policy
-    **file: ** App\Http\Controllers\StoriesController.php
+```php
+    public function destroy(Story $story)
+    {
+        $this->authorize('delete', $story); // Dung StoryPolicy function delete()
+        $story->delete();
+    }
+```
 
-    ```php
-        public function destroy(Story $story)
-        {
-            $this->authorize('delete', $story); // Dung StoryPolicy function delete()
-            $story->delete();
-        }
-    ```
+c3: Dùng Gate
 
-    c3: Dùng Gate
-    
-    **Định nghĩa Gate ** App\Providers\AuthServiceProvider.php
+**Định nghĩa Gate ** App\Providers\AuthServiceProvider.php
 
-    ```php
-        use Illuminate\Support\Facades\Gate;
+```php
+    use Illuminate\Support\Facades\Gate;
 
-        public function boot()
-        {
-            $this->registerPolicies();
+    public function boot()
+    {
+        $this->registerPolicies();
 
-            Gate::define('story-edit', function ($user, $story) {
-                return $user->id === $story->user_id;
-            }); 
-        }
-    ```
+        Gate::define('story-edit', function ($user, $story) {
+            return $user->id === $story->user_id;
+        }); 
+    }
+```
 
-    **Use Gate** App\Http\Controllers\StoriesController.php
+**Use Gate** App\Http\Controllers\StoriesController.php
 
-    ```php
-        public function update(StoryRequest $request, Story $story)
-        {
-            Gate::authorize('story-edit', $story); // Dinh nghia authorize trong AuthServiceProvider
-            $story->update($request->all());
-        }
-    ```
+```php
+    public function update(StoryRequest $request, Story $story)
+    {
+        Gate::authorize('story-edit', $story); // Dinh nghia authorize trong AuthServiceProvider
+        $story->update($request->all());
+    }
+```
 
 ## factory
 
