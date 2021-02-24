@@ -62,9 +62,9 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## Thao Tac - Manipulation -- 8806 - 4.1
 
-composer create-project laravel/laravel :nameProject 7.x
 
 ```
+composer create-project laravel/laravel :nameProject 7.x
 php artisan list
 php artisan serve
 yarn watch
