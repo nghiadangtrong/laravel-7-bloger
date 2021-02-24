@@ -86,19 +86,18 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## authorize - Dùng Policy vs Gate
 
-`php artisan make:policy StoryPolicy -m Story `
+`php artisan make:policy StoryPolicy -m Story`
 
 c1: Theo chuẩn REST API
 **file:** App\Http\Controllers\StoriesController.php
 
-    ```php
-
+```php
     public function __construct()
     {
         // Authorize theo chuẩn REST API
         $this->authorizeResource(Story::class, 'story');
     }
-    ```
+```
 
 c2: Chặn theo route khai báo Policy
 **file:** App\Http\Controllers\StoriesController.php
@@ -113,7 +112,7 @@ c2: Chặn theo route khai báo Policy
 
 c3: Dùng Gate
 
-**Định nghĩa Gate ** App\Providers\AuthServiceProvider.php
+**Định nghĩa Gate** App\Providers\AuthServiceProvider.php
 
 ```php
     use Illuminate\Support\Facades\Gate;
@@ -140,56 +139,57 @@ c3: Dùng Gate
 
 ## factory
 
-    - Tạo dữ liệu test cho Model(Table) tương ứng
-    - Gọi Hàm factory trong unit test hoặc thông qua tinker
+- Tạo dữ liệu test cho Model(Table) tương ứng
+- Gọi Hàm factory trong unit test hoặc thông qua tinker
 
-    php artisan make:factory StoryFactory -m Story
+`php artisan make:factory StoryFactory -m Story`
 
-    php artisan tinker
-    factory(App\Story::class, 3)->create() 'Tạo 3 bản ghi trong bảng User'
+`php artisan tinker`
+    `factory(App\Story::class, 3)->create() 'Tạo 3 bản ghi trong bảng User'`
 
 ## Route::bind
 
-    - Tạo liên kết giữa một biến hiển thị tại Route và trả về kết quả mong muốn
-    https://laravel.com/docs/7.x/routing#explicit-binding
+- Tạo liên kết giữa một biến hiển thị tại Route và trả về kết quả mong muốn
+https://laravel.com/docs/7.x/routing#explicit-binding
 
-    '/story/{activeStory}'  => bind => \App\Story::where('id', $id)->where('status', 1)->firstOrFail()
+'/story/{activeStory}'  => bind => \App\Story::where('id', $id)->where('status', 1)->firstOrFail()
 
 ### Accessors & Mutators
 
-    https://laravel.com/docs/7.x/eloquent-mutators#accessors-and-mutators
-    Accessors: 
-        Cho phép thực hiện tiền sử lý trước khi hiển thị attribute
+https://laravel.com/docs/7.x/eloquent-mutators#accessors-and-mutators
 
-        Khai báo:
+**Accessors:**
+    Cho phép thực hiện tiền sử lý trước khi hiển thị attribute
 
-        ```php
-            // File: App\Story
-            // Hàm thay đổi giá trị 'title' khi lấy ra 
-            // Viết hoa chữ cái đầu tiền
-            public function getTitleAttribute ($value) {
-                return ucfirst($value);
-            }
-        ```
+    Khai báo:
 
-        Sử dụng
+    ```php
+        // File: App\Story
+        // Hàm thay đổi giá trị 'title' khi lấy ra 
+        // Viết hoa chữ cái đầu tiền
+        public function getTitleAttribute ($value) {
+            return ucfirst($value);
+        }
+    ```
 
-        ```php
-            ...
-            $title = \App\Story::find(1)->title; // Chữ cái đầu tiên title tự động viết hoa
-        ```
+    Sử dụng
 
-    Mutators:
-        Cho phép thực hiện tiền sử lý trước khi lưu một attribute vào column
+    ```php
+        ...
+        $title = \App\Story::find(1)->title; // Chữ cái đầu tiên title tự động viết hoa
+    ```
 
-        ```php
-            // File: App\Story
-            // Khi lưu attribute title thì tạo và lưu slug theo title
-            public function setTitleAttribute ($value) {
-                $this->attributes['title'] = $value;
-                $this->attributes['slug'] = \Illuminate\Support\Str::slug($value);
-            }
-        ```
+Mutators:
+    Cho phép thực hiện tiền sử lý trước khi lưu một attribute vào column
+
+    ```php
+        // File: App\Story
+        // Khi lưu attribute title thì tạo và lưu slug theo title
+        public function setTitleAttribute ($value) {
+            $this->attributes['title'] = $value;
+            $this->attributes['slug'] = \Illuminate\Support\Str::slug($value);
+        }
+    ```
 
 ## Mail
 
@@ -218,7 +218,7 @@ c3: Dùng Gate
 
 ### Subscribers cho Event + Listen
 
-    **Tác dụng: ** Cho phép đăng ký nhiều listener trong 1 class
+    **Tác dụng:** Cho phép đăng ký nhiều listener trong 1 class
 
     B1: Tạo file listen subscribe `php artisan make:listen StoryEventSubscribe` 
         bind event vào listen tương ứng
