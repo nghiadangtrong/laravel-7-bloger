@@ -64,7 +64,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 composer create-project laravel/laravel :nameProject 7.x
 
-```bash
+```
 php artisan list
 php artisan serve
 yarn watch
@@ -82,8 +82,8 @@ php artisan make:controller StoriesController -r
 php artisan make:request StoryRequest
 
 php artisan tinker
-    App\Stories::truncate()     'Xóa hết bản ghi trong table'
-    Hash::make('passowrd')      'Hash password'
+App\Stories::truncate()     'Xóa hết bản ghi trong table'
+Hash::make('passowrd')      'Hash password'
 ```
 
 ### authorize - Dùng Policy vs Gate
