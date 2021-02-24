@@ -159,104 +159,105 @@ https://laravel.com/docs/7.x/routing#explicit-binding
 https://laravel.com/docs/7.x/eloquent-mutators#accessors-and-mutators
 
 **Accessors:**
-    Cho phép thực hiện tiền sử lý trước khi hiển thị attribute
+Cho phép thực hiện tiền sử lý trước khi hiển thị attribute
 
-    Khai báo:
+Khai báo:
 
-    ```php
-        // File: App\Story
-        // Hàm thay đổi giá trị 'title' khi lấy ra 
-        // Viết hoa chữ cái đầu tiền
-        public function getTitleAttribute ($value) {
-            return ucfirst($value);
-        }
-    ```
+```php
+    // File: App\Story
+    // Hàm thay đổi giá trị 'title' khi lấy ra 
+    // Viết hoa chữ cái đầu tiền
+    public function getTitleAttribute ($value) {
+        return ucfirst($value);
+    }
+```
 
-    Sử dụng
+Sử dụng
 
-    ```php
-        ...
-        $title = \App\Story::find(1)->title; // Chữ cái đầu tiên title tự động viết hoa
-    ```
+```php
+    ...
+    $title = \App\Story::find(1)->title; // Chữ cái đầu tiên title tự động viết hoa
+```
 
-Mutators:
-    Cho phép thực hiện tiền sử lý trước khi lưu một attribute vào column
+**Mutators:**
+Cho phép thực hiện tiền sử lý trước khi lưu một attribute vào column
 
-    ```php
-        // File: App\Story
-        // Khi lưu attribute title thì tạo và lưu slug theo title
-        public function setTitleAttribute ($value) {
-            $this->attributes['title'] = $value;
-            $this->attributes['slug'] = \Illuminate\Support\Str::slug($value);
-        }
-    ```
+```php
+    // File: App\Story
+    // Khi lưu attribute title thì tạo và lưu slug theo title
+    public function setTitleAttribute ($value) {
+        $this->attributes['title'] = $value;
+        $this->attributes['slug'] = \Illuminate\Support\Str::slug($value);
+    }
+```
 
 ## Mail
 
-    `php artisan make:mail NotifyAdmin`
+`php artisan make:mail NotifyAdmin`
 
-    Tạo dựa trên Markdown có sẵn của laravel
-    `php artisan make:mail NotifyAdminMarkdown --markdown=mails.markdown.notifyAmdin`  
+Tạo dựa trên Markdown có sẵn của laravel
+`php artisan make:mail NotifyAdminMarkdown --markdown=mails.markdown.notifyAmdin`  
 
-    Copy larvel-mail markdown ra folder /vendor/email/ và có thể tùy chỉnh
-    `php artisan vendor:publish --tag=laravel-mail`
+Copy larvel-mail markdown ra folder /vendor/email/ và có thể tùy chỉnh
+`php artisan vendor:publish --tag=laravel-mail`
 
-    Tìm hiểu vendor:publish => https://laravel.com/docs/7.x/packages
+Tìm hiểu vendor:publish => https://laravel.com/docs/7.x/packages
 
 ## Event + Listen
 
-    **Dùng khi:** Muốn thực hiện một tác vụ độc lập hoặc tốn nhiều thời gian
+**Dùng khi:** Muốn thực hiện một tác vụ độc lập hoặc tốn nhiều thời gian
 
-    **follow:** Bind event to listens = > dispatch event => listens thực hiện
+**follow:** Bind event to listens = > dispatch event => listens thực hiện
 
-    B1: Tạo event `php artisan make:event StoryCreated` => Chuyền Data
-    B2: Tạo listens và viết hàm thực hiện
-    `php artisan make:listen SendNotification -e StoryCreated`
-    `php artisan make:listen SendNotification -e WriteLog`
-    B3: Bind Event với nhiều listens : App\Providers\EventServiceProvider -> $listen[] 
-    B4: Gọi event `event (new StoryCreate(data))`
+B1: Tạo event `php artisan make:event StoryCreated` => Chuyền Data
+B2: Tạo listens và viết hàm thực hiện
+`php artisan make:listen SendNotification -e StoryCreated`
+`php artisan make:listen SendNotification -e WriteLog`
+B3: Bind Event với nhiều listens : App\Providers\EventServiceProvider -> $listen[] 
+B4: Gọi event `event (new StoryCreate(data))`
 
 ### Subscribers cho Event + Listen
 
-    **Tác dụng:** Cho phép đăng ký nhiều listener trong 1 class
+**Tác dụng:** Cho phép đăng ký nhiều listener trong 1 class
 
-    B1: Tạo file listen subscribe `php artisan make:listen StoryEventSubscribe` 
-        bind event vào listen tương ứng
-        
-        **file: App\Listeners\StoryEventSubscribe**
+B1: Tạo file listen subscribe `php artisan make:listen StoryEventSubscribe` 
+    bind event vào listen tương ứng
+    
+**file: App\Listeners\StoryEventSubscribe**
 
-        ```php 
-            // bind event to method handle
-            public function subscribe($events) {
-                $event->listen(
-                    'App\Events\StoryCreated',
-                    'App\Listeners\StoryEventSubscribe@HanldeCreated'
-                )
-            }
+```php 
+    // bind event to method handle
+    public function subscribe($events) {
+        $event->listen(
+            'App\Events\StoryCreated',
+            'App\Listeners\StoryEventSubscribe@HanldeCreated'
+        )
+    }
 
-            // Define Method Handle 
-            public function HanldeCreated($event) {}
-        ```
-    B2: Đăng ký subscribe 
-        **file: App\Providers\EventServiceProvider **
-        
-        `protected $subscribe = ['App\Listeners\StoryEventSubscribe']`
+    // Define Method Handle 
+    public function HanldeCreated($event) {}
+```
+
+B2: Đăng ký subscribe 
+**file: App\Providers\EventServiceProvider **
+
+`protected $subscribe = ['App\Listeners\StoryEventSubscribe']`
 
 ## SoftDelete - Xóa mềm
 
-    B1: Tạo migrate `php artisan make:migration add_softdelete_to_stories --table=stories` 
-    B2: $table->softDeleles() & $table->dropSoftDeleles()
-    B3: Thêm phương thức SoftDeletes vào model
-    **file: App\Story**
+B1: Tạo migrate `php artisan make:migration add_softdelete_to_stories --table=stories` 
+B2: $table->softDeleles() & $table->dropSoftDeleles()
+B3: Thêm phương thức SoftDeletes vào model
+**file: App\Story**
 
-    ```php
-        use Illumanite\Database\Eloquent\Model;
-        use Illumanite\Database\Eloquent\SoftDeletes;
+```php
+    use Illumanite\Database\Eloquent\Model;
+    use Illumanite\Database\Eloquent\SoftDeletes;
 
-        class Story extends Model{
-            use SoftDeletes;
-        }
-    ```
+    class Story extends Model{
+        use SoftDeletes;
+    }
+```
 
 # Document
 
