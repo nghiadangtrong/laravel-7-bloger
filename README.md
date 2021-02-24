@@ -62,7 +62,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## Thao Tac - Manipulation -- 8806 - 4.1
 
-composer create-project laravel/laravel <name> 7.x
+composer create-project laravel/laravel :nameProject 7.x
 
 php artisan list
 php artisan serve
@@ -83,7 +83,10 @@ php artisan make:request StoryRequest
 php artisan tinker
     `App\Stories::truncate()` Xóa hết bản ghi trong table
     `Hash::make('passowrd')` Hash password
+
+
 ### authorize - Dùng Policy vs Gate
+
     `php artisan make:policy StoryPolicy -m Story `
 
     c1: Theo chuẩn REST API
@@ -136,6 +139,7 @@ php artisan tinker
     ```
 
 ### factory
+
     - Tạo dữ liệu test cho Model(Table) tương ứng
     - Gọi Hàm factory trong unit test hoặc thông qua tinker
 
@@ -145,12 +149,14 @@ php artisan tinker
     factory(App\Story::class, 3)->create() 'Tạo 3 bản ghi trong bảng User'
 
 ### Route::bind
+
     - Tạo liên kết giữa một biến hiển thị tại Route và trả về kết quả mong muốn
     https://laravel.com/docs/7.x/routing#explicit-binding
 
     '/story/{activeStory}'  => bind => \App\Story::where('id', $id)->where('status', 1)->firstOrFail()
 
 ### Accessors & Mutators
+
     https://laravel.com/docs/7.x/eloquent-mutators#accessors-and-mutators
     Accessors: 
         Cho phép thực hiện tiền sử lý trước khi hiển thị attribute
@@ -186,6 +192,7 @@ php artisan tinker
         ```
 
 ### Mail
+
     `php artisan make:mail NotifyAdmin`
 
     Tạo dựa trên Markdown có sẵn của laravel
@@ -197,6 +204,7 @@ php artisan tinker
     Tìm hiểu vendor:publish => https://laravel.com/docs/7.x/packages
 
 ### Event + Listen
+
     **Dùng khi:** Muốn thực hiện một tác vụ độc lập hoặc tốn nhiều thời gian
 
     **follow:** Bind event to listens = > dispatch event => listens thực hiện
@@ -209,6 +217,7 @@ php artisan tinker
     B4: Gọi event `event (new StoryCreate(data))`
 
 #### Subscribers cho Event + Listen
+
     **Tác dụng: ** Cho phép đăng ký nhiều listener trong 1 class
 
     B1: Tạo file listen subscribe `php artisan make:listen StoryEventSubscribe` 
@@ -234,6 +243,7 @@ php artisan tinker
         `protected $subscribe = ['App\Listeners\StoryEventSubscribe']`
 
 ### SoftDelete - Xóa mềm
+
     B1: Tạo migrate `php artisan make:migration add_softdelete_to_stories --table=stories` 
     B2: $table->softDeleles() & $table->dropSoftDeleles()
     B3: Thêm phương thức SoftDeletes vào model
@@ -249,9 +259,11 @@ php artisan tinker
     ```
 
 ## Document
+
 https://laravel-news.com/laravel-boilerplate-7-0
 
 https://spatie.be/docs/laravel-permission/v4/introduction
 
 ## Note
+
     **File log** : storage/logs/larvel.log
