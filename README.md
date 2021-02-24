@@ -62,29 +62,31 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 # Thao Tac - Manipulation -- 8806 - 4.1
 
-composer create-project laravel/laravel :nameProject 7.x
+    composer create-project laravel/laravel :nameProject 7.x
 
-php artisan list
-php artisan serve
-yarn watch
-php artisan route:list
-php artisan cache:clear
-php artisan config:cache
+    php artisan list
+    php artisan serve
+    yarn watch
+    php artisan route:list
+    php artisan cache:clear
+    php artisan config:cache
 
-composer require laravel/ui:^2.4
-php artisan ui vue --auth
-npm install && npm run dev
+    composer require laravel/ui:^2.4
+    php artisan ui vue --auth
+    npm install && npm run dev
 
-php artisan make:modal Story -m
-php artisan migrate
-php artisan make:controller StoriesController -r
-php artisan make:request StoryRequest
+    php artisan make:modal Story -m
+    php artisan migrate
+    php artisan make:controller StoriesController -r
+    php artisan make:request StoryRequest
 
-php artisan tinker
-    `App\Stories::truncate()` Xóa hết bản ghi trong table
-    `Hash::make('passowrd')` Hash password
+    php artisan tinker
+        App\Stories::truncate()     'Xóa hết bản ghi trong table'
+        Hash::make('passowrd')      'Hash password'
 
 ## authorize - Dùng Policy vs Gate
+
+    test
 
     `php artisan make:policy StoryPolicy -m Story `
 
