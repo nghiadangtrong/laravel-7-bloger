@@ -308,6 +308,62 @@ Route::namespace('Admin')
     });
 ```
 
+### Upload files
+
+B1: Cài đặt/config package thao tác với image
+
+**source** [http://image.intervention.io/](http://image.intervention.io/)
+
+`composer require intervention/image`
+
+**file** `config/app.php`
+
+```php
+    'providers' => [
+        ...
+        Intervention\Image\ImageServiceProvider::class
+    ]
+
+    'aliases' => [
+        ...
+        'Image' => Intervention\Image\Facades\Image::class
+    ]
+```
+
+B2: Cho phép truy cập files
+
+**document:** [https://laravel.com/docs/8.x/filesystem#the-public-disk](https://laravel.com/docs/8.x/filesystem#the-public-disk)
+
+Liên kết thư mục /storage/app/public đến thư mục (không tạo) /public/storage
+
+`php artisan storage:link`
+
+B3:Thực hiện đọc/ghi file image
+
+```php
+    $imagePath = public_path('/storage/pikachu.jpg');
+    $writePath = public_path('/storage/thumbnail.jpg');
+
+    $image = Image::make($imagePath)->resize(300, 200);
+    $image->save($writePath);
+    return $image->response('jpg');
+```
+
+**Get file** [https://laravel.com/docs/7.x/filesystem#file-uploads](https://laravel.com/docs/7.x/filesystem#file-uploads)
+
+*file*: app\Http\Controller\StoriesController.php
+
+```php
+    if ($request->hasFile('image')) {
+        $image = $request->file('image');
+        $fileName = time().$image->getClientOriginalExtension();
+        
+        Image::make($image)->resize(300, 200)->save(public_path('storage/'.$fileName));
+        $story->image = $fileName;
+        $story->save();
+    }
+```
+
 ## Document
 
 [https://laravel-news.com/laravel-boilerplate-7-0](https://laravel-news.com/laravel-boilerplate-7-0)

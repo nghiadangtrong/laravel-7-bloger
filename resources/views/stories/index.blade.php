@@ -17,6 +17,7 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <td>Thumbnail</td>
                                 <td>Title</td>
                                 <td>Type</td>
                                 <td>Status</td>
@@ -26,6 +27,9 @@
                         <tbody>
                             @foreach ($stories as $story)
                                 <tr>
+                                    <td>
+                                        <img src="{{ $story->thumbnail }}" alt="">
+                                    </td>
                                     <td>{{ $story->title }}</td>
                                     <td>{{ $story->type }}</td>
                                     <td>{{ $story->status ? 'Yes' : 'No' }}</td>

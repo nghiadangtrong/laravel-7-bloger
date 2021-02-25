@@ -45,3 +45,13 @@ Route::namespace('Admin')
         Route::patch('/restore/{deletedStory}', 'StoriesController@restore')->name('admin.stories.restore');
         Route::delete('/force-delete/{deletedStory}', 'StoriesController@forceDelete')->name('admin.stories.focusDelete');
     });
+
+Route::get('/image', function () {
+    $imagePath = public_path('/storage/pikachu.jpg');
+    $writePath = public_path('/storage/thumbnail.jpg');
+
+    $image = Image::make($imagePath)->resize(300, 200);
+    $image->save($writePath);
+    
+    return $image->response('jpg');
+});

@@ -52,6 +52,14 @@ class Story extends Model
     }
 
     /**
+     * Tạo đường dẫn file theo image
+     */
+    public function getThumbnailAttribute () {
+        $path = $this->image ? 'storage/'.$this->image : 'storage/thumbnail.jpg';
+        return asset($path);
+    }
+
+    /**
      * Khi lưu title cũng lưu lại slug tương ứng
      */
     public function setTitleAttribute ($value) {

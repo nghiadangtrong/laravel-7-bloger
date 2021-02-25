@@ -62,3 +62,18 @@
         <span class="invalid-feedback" role="alert">{{ $message }}</span>
     @enderror
 </div>
+
+<div class="form-group">
+    <label for="image">Image</label>
+    <input type="file" id="image" name="image" class="form-control @error('image') is-invalid @enderror">
+
+    @error('image')
+        <span class="invalid-feedback">{{$message}}</span>
+    @enderror
+</div>
+
+<div class="form-group">
+    @if($story->image)
+        <img src="{{ $story->thumbnail }}" alt="">
+    @endif
+</div>

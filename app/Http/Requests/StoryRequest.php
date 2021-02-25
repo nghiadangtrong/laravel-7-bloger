@@ -41,7 +41,8 @@ class StoryRequest extends FormRequest
             ],
             'body' => 'required',
             'type' => 'required',
-            'status' => 'required' 
+            'status' => 'required',
+            'image' => 'sometimes|mimes:jpeg,jpg,png' // somtimes : Thực hiện validate nếu có tồn tại
         ];
     }
 

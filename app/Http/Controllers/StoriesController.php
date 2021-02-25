@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoryRequest;
 use App\Story;
+use Intervention\Image\Facades\Image;
 
 class StoriesController extends Controller
 {
@@ -54,6 +55,8 @@ class StoriesController extends Controller
         // Tu dong them user_id boi id user hien tai
         $story = auth()->user()->stories()->create($request->all());
 
+        $this->uploadFile($request, $story);
+        
         // Dispatch event
         event( new StoryCreated($story->title));
 
@@ -97,7 +100,9 @@ class StoriesController extends Controller
         // $story->update($request->data());
         $story->update($request->all());
 
-        event( new StoryEdited($story->title));
+        $this->uploadFile($request, $story);
+
+        event(new StoryEdited($story->title));
 
         return redirect()->route('stories.index')->with(['status' => 'Update Story Successfully']);
     }
@@ -113,5 +118,16 @@ class StoriesController extends Controller
         // $this->authorize('update', $story); // Dung policy 
         $story->delete();
         return redirect()->route('stories.index')->with(['status' => 'Delete Story Successfully']);
+    }
+
+    private function uploadFile($request, $story) {
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $fileName = time().'.'.$image->getClientOriginalExtension();
+            
+            Image::make($image)->resize(300, 200)->save(public_path('storage/'.$fileName));
+            $story->image = $fileName;
+            $story->save();
+        }
     }
 }
