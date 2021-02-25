@@ -33,3 +33,15 @@ Route::get('/', 'DashboardController@index')->name('dashboard.index');
 Route::get('/story/{activeStory:slug}', 'DashboardController@show')->name('dashboard.show');
 
 Route::get('/mail', 'DashboardController@email')->name('dashboard.email');
+
+Route::namespace('Admin')
+    ->prefix('admin')
+    ->middleware([
+        'auth', 
+        \App\Http\Middleware\CheckAdmin::class
+    ])
+    ->group(function () {
+        Route::get('/deleted-stories', 'StoriesController@index')->name('admin.stories.index');
+        Route::patch('/restore/{deletedStory}', 'StoriesController@restore')->name('admin.stories.restore');
+        Route::delete('/force-delete/{deletedStory}', 'StoriesController@forceDelete')->name('admin.stories.focusDelete');
+    });

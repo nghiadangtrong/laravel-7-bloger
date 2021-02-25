@@ -125,7 +125,7 @@ c3: Dùng Gate
 
         Gate::define('story-edit', function ($user, $story) {
             return $user->id === $story->user_id;
-        }); 
+        });
     }
 ```
 
@@ -167,7 +167,7 @@ Khai báo:
 
 ```php
     // File: App\Story
-    // Hàm thay đổi giá trị 'title' khi lấy ra 
+    // Hàm thay đổi giá trị 'title' khi lấy ra
     // Viết hoa chữ cái đầu tiền
     public function getTitleAttribute ($value) {
         return ucfirst($value);
@@ -198,7 +198,7 @@ Cho phép thực hiện tiền sử lý trước khi lưu một attribute vào c
 `php artisan make:mail NotifyAdmin`
 
 Tạo dựa trên Markdown có sẵn của laravel
-`php artisan make:mail NotifyAdminMarkdown --markdown=mails.markdown.notifyAmdin`  
+`php artisan make:mail NotifyAdminMarkdown --markdown=mails.markdown.notifyAmdin`
 
 Copy larvel-mail markdown ra folder /vendor/email/ và có thể tùy chỉnh
 `php artisan vendor:publish --tag=laravel-mail`
@@ -241,7 +241,7 @@ B1: Tạo file listen subscribe `php artisan make:listen StoryEventSubscribe`
         )
     }
 
-    // Define Method Handle 
+    // Define Method Handle
     public function HanldeCreated($event) {}
 ```
 
@@ -266,6 +266,46 @@ B3: Thêm phương thức SoftDeletes vào model
     class Story extends Model{
         use SoftDeletes;
     }
+```
+
+### Admin - middleware (admin) bảo vệ route
+
+B1: Thêm role cho user
+
+`php artisan make:migration add_type_to_users`
+
+B2: Thêm controller Admin\*
+
+`php artisan make:controller Admin\StoriesController`
+
+B3: Thêm Middle kiểm tra có phải admin không
+
+`php artisan make:middleware CheckAdmin`
+
+*file:* App\Http\Middleware\CheckAdmin
+
+```php
+    public function handle($request, Closure $next)
+    {
+        if ($request->user()->type !== 1) {
+            abort(404);
+        }
+        return $next($request);
+    }
+```
+
+B3: Thêm Route Cho admin (namespace, prefix url, middleware)
+
+```php
+Route::namespace('Admin')
+    ->prefix('admin')
+    ->middleware([
+        'auth', 
+        \App\Http\Middleware\CheckAdmin::class
+    ])
+    ->group(function () {
+        Route::patch('/restore/{deletedStory}', 'StoriesController@restore')->name('admin.stories.restore');
+    });
 ```
 
 ## Document

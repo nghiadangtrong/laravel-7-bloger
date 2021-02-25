@@ -38,6 +38,11 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('activeStory', function ($slug) {
             return \App\Story::where('slug', $slug)->where('status', 1)->firstOrFail();
         });
+
+        // bind Key deletedStory với Story đã bị softdelete
+        Route::bind('deletedStory', function ($id) {
+            return \App\Story::onlyTrashed()->where('id', $id)->firstOrFail();
+        });
     }
 
     /**
