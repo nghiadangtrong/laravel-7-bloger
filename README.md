@@ -60,7 +60,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-## Thao Tac - Manipulation -- 8806 - 4.8
+## Thao Tac - Manipulation -- 8806 - 4.11
 
 ```
 composer create-project laravel/laravel :nameProject 7.x
