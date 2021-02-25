@@ -12,9 +12,10 @@
                 </div>
 
                 <div class="card-body">
-                    <table class="table">
-                        {{ $story->body }}
-                    </table> 
+                    <img class="card-img-top" data-src="{{ $story->thumbnail }}" src={{ $story->thumbnail }} alt="Card image cap">
+                    <br/>
+                    <br/>
+                    {{ $story->body }}
                 </div>
             </div>
         </div>
