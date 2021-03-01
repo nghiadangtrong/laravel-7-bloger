@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoryRequest;
 use App\Story;
+use App\Tag;
 use Intervention\Image\Facades\Image;
 
 class StoriesController extends Controller
@@ -40,7 +41,11 @@ class StoriesController extends Controller
         // $this->authorize('create');
         // fix bug: Dung chung form edit
         $story = new Story;
-        return view('stories.create', ['story' => $story]);
+        $tags = Tag::get();
+        return view('stories.create', [
+            'story' => $story,
+            'tags' => $tags
+        ]);
     }
 
     /**
@@ -55,6 +60,10 @@ class StoriesController extends Controller
         // Tu dong them user_id boi id user hien tai
         $story = auth()->user()->stories()->create($request->all());
 
+        // save relation may-to-may
+        $story->tags()->sync($request->tags);
+
+        // upload file
         $this->uploadFile($request, $story);
         
         // Dispatch event
@@ -84,7 +93,8 @@ class StoriesController extends Controller
     {
         // Gate::authorize('story-edit', $story); // Dinh nghia authorize trong AuthServiceProvider
         // $this->authorize('update', $story); // Dung policy
-        return view('stories.edit', ['story' => $story]);
+        $tags = Tag::get();
+        return view('stories.edit', ['story' => $story, 'tags' => $tags]);
     }
 
     /**
@@ -99,6 +109,8 @@ class StoriesController extends Controller
         // $this->authorize('update', $story); // Dung policy
         // $story->update($request->data());
         $story->update($request->all());
+
+        $story->tags()->sync($request->tags);
 
         $this->uploadFile($request, $story);
 

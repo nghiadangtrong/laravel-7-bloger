@@ -27,7 +27,7 @@ class DashboardController extends Controller
             $query->where('type', $type);
         }
 
-        $stories = $query->orderBy('id', 'DESC')->paginate(9);
+        $stories = $query->with(['user', 'tags'])->orderBy('id', 'DESC')->paginate(9);
 
         return view('dashboard.index', [ 'stories' => $stories ]);
     }

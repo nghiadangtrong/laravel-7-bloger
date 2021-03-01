@@ -77,3 +77,18 @@
         <img src="{{ $story->thumbnail }}" alt="">
     @endif
 </div>
+
+<div class="form-group">
+    <legend>Tags</legend>
+
+    @foreach($tags as $tag)
+        <div class="form-check form-check-inline">
+            <input
+                type="checkbox" class="form-check-input" 
+                name="tags[]" id="{{ $tag->id }}" value="{{$tag->id}}"
+                {{ in_array($tag->id, old('tags', $story->tags->pluck('id')->toArray())) ? 'checked' : '' }}
+            >
+            <label for="{{$tag->id}}" class="form-check-label">{{ $tag->name }}</label>
+        </div>
+    @endforeach
+</div>
